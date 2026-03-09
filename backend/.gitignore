@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.db
+.env
+.fernet_key
+instance/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: osa-suite
+description: OSA Management Suite - Projects, Licenses, and Certificates
+version: 0.1.0
+appVersion: "1.0.0"
+type: application

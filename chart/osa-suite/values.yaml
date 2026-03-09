@@ -1,0 +1,55 @@
+# OSA Management Suite Helm Values
+
+# Container registry prefix (e.g., "registry.example.com/team" or "" for local)
+imageRegistry: ""
+
+backend:
+  image: osa-backend
+  tag: latest
+  replicas: 1
+  port: 5000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+frontend:
+  image: osa-frontend
+  tag: latest
+  replicas: 1
+  port: 8080
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: ""
+  accessMode: ReadWriteOnce
+
+auth:
+  username: admin
+  # Generate with: python -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('yourpassword'))"
+  passwordHash: ""
+
+secrets:
+  # Generate with: python -c "import secrets; print(secrets.token_hex(32))"
+  secretKey: ""
+  # Generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+  fernetKey: ""
+
+ingress:
+  enabled: false
+  className: ""
+  host: osa.example.com
+  tls: false
+  tlsSecretName: ""
+  annotations: {}

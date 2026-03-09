@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "osa-suite.backendName" . }}
+  labels:
+    app.kubernetes.io/component: backend
+    {{- include "osa-suite.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: backend
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: backend
+          image: {{ include "osa-suite.backendImage" . }}
+          imagePullPolicy: {{ eq .Values.backend.tag "latest" | ternary "Always" "IfNotPresent" }}
+          ports:
+            - containerPort: {{ .Values.backend.port }}
+              protocol: TCP
+          env:
+            - name: DATABASE_URL
+              value: "sqlite:////data/osa.db"
+            - name: SESSION_COOKIE_SECURE
+              value: {{ .Values.ingress.tls | ternary "true" "false" | quote }}
+          envFrom:
+            - secretRef:
+                name: {{ include "osa-suite.fullname" . }}-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /api/auth/me
+              port: {{ .Values.backend.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/auth/me
+              port: {{ .Values.backend.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}
+      volumes:
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "osa-suite.fullname" . }}-data
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

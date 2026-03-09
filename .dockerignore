@@ -1,0 +1,8 @@
+.git
+.claude
+.env
+*.md
+chart/
+dev.sh
+.editorconfig
+.gitignore
