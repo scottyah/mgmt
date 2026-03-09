@@ -29,7 +29,7 @@ if [ ! -d "$FRONTEND_DIR/node_modules" ]; then
 fi
 
 # Start backend
-echo "Starting backend on http://localhost:5000..."
+echo "Starting backend on http://localhost:5001..."
 (cd "$BACKEND_DIR" && FLASK_DEBUG=true .venv/bin/python run.py) &
 BACKEND_PID=$!
 
@@ -41,7 +41,7 @@ FRONTEND_PID=$!
 echo ""
 echo "OSA Management Suite running:"
 echo "  Frontend: http://localhost:5173"
-echo "  Backend:  http://localhost:5000"
+echo "  Backend:  http://localhost:5001"
 echo "  Login:    admin / admin"
 echo ""
 echo "Press Ctrl+C to stop."

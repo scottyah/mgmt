@@ -143,6 +143,8 @@ export function useDashboardStats() {
       const res = await api.get("/dashboard/stats");
       return res.data as {
         projects_count: number;
+        total_users: number;
+        active_users: number;
         licenses_count: number;
         certs_count: number;
         expiring_licenses_30d: number;
@@ -171,7 +173,7 @@ interface ActivityEntry {
   entity_name: string;
   user: string;
   timestamp: string;
-  details: string;
+  details: Record<string, unknown> | null;
 }
 
 export function useDashboardActivity() {

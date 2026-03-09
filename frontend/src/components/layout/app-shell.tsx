@@ -9,9 +9,9 @@ export function AppShell() {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex min-h-0 flex-1 flex-col">
         <TopBar />
-        <main className="flex-1 overflow-y-auto bg-background p-6">
+        <main className="min-h-0 flex-1 overflow-y-auto bg-background p-6">
           <Outlet />
         </main>
       </div>

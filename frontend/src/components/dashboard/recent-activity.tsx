@@ -17,7 +17,7 @@ interface ActivityEntry {
   entity_name: string;
   user: string;
   timestamp: string;
-  details: string;
+  details: Record<string, unknown> | null;
 }
 
 interface RecentActivityProps {
@@ -94,7 +94,7 @@ export function RecentActivity({ entries, isLoading }: RecentActivityProps) {
                     </p>
                     {entry.details && (
                       <p className="text-xs text-muted-foreground">
-                        {entry.details}
+                        {Object.entries(entry.details).map(([k, v]) => `${k}: ${v}`).join(", ")}
                       </p>
                     )}
                     <p className="mt-0.5 text-xs text-muted-foreground/70">

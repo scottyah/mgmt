@@ -7,8 +7,14 @@ export interface Project {
   name: string;
   description: string;
   bfm: string;
+  bfm_email: string;
+  bfm_phone: string;
   pm: string;
+  pm_email: string;
+  pm_phone: string;
   admin: string;
+  admin_email: string;
+  admin_phone: string;
   status: string;
   created_at: string;
   updated_at: string;

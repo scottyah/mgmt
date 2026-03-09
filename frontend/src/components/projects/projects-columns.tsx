@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 import type { Project } from "@/hooks/use-projects";
 import { DataTableColumnHeader } from "@/components/shared/data-table-column-header";
 import { StatusBadge } from "@/components/shared/status-badge";
+import { ContactCell } from "@/components/projects/contact-cell";
 
 export const projectsColumns: ColumnDef<Project, unknown>[] = [
   {
@@ -27,17 +28,38 @@ export const projectsColumns: ColumnDef<Project, unknown>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="BFM" />
     ),
+    cell: ({ row }) => (
+      <ContactCell
+        name={row.original.bfm}
+        email={row.original.bfm_email}
+        phone={row.original.bfm_phone}
+      />
+    ),
   },
   {
     accessorKey: "pm",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="PM" />
     ),
+    cell: ({ row }) => (
+      <ContactCell
+        name={row.original.pm}
+        email={row.original.pm_email}
+        phone={row.original.pm_phone}
+      />
+    ),
   },
   {
     accessorKey: "admin",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Admin" />
+    ),
+    cell: ({ row }) => (
+      <ContactCell
+        name={row.original.admin}
+        email={row.original.admin_email}
+        phone={row.original.admin_phone}
+      />
     ),
   },
   {

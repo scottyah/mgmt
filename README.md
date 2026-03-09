@@ -17,7 +17,7 @@ Internal tool for managing projects, software licenses, and X.509 certificates.
 
 Opens at [http://localhost:5173](http://localhost:5173). Default login: `admin` / `admin`.
 
-Starts both the Flask backend (`:5000`) and Vite dev server (`:5173`). First run installs dependencies automatically.
+Starts both the Flask backend (`:5001`) and Vite dev server (`:5173`). First run installs dependencies automatically.
 
 ## Project Structure
 

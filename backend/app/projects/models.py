@@ -13,8 +13,14 @@ class Project(db.Model):
 
     # Contact fields
     bfm = db.Column(db.String(200), nullable=True)
+    bfm_email = db.Column(db.String(200), nullable=True)
+    bfm_phone = db.Column(db.String(50), nullable=True)
     pm = db.Column(db.String(200), nullable=True)
+    pm_email = db.Column(db.String(200), nullable=True)
+    pm_phone = db.Column(db.String(50), nullable=True)
     admin = db.Column(db.String(200), nullable=True)
+    admin_email = db.Column(db.String(200), nullable=True)
+    admin_phone = db.Column(db.String(50), nullable=True)
 
     status = db.Column(db.String(20), nullable=False, default="active")
 
@@ -42,8 +48,14 @@ class Project(db.Model):
             "name": self.name,
             "description": self.description,
             "bfm": self.bfm,
+            "bfm_email": self.bfm_email,
+            "bfm_phone": self.bfm_phone,
             "pm": self.pm,
+            "pm_email": self.pm_email,
+            "pm_phone": self.pm_phone,
             "admin": self.admin,
+            "admin_email": self.admin_email,
+            "admin_phone": self.admin_phone,
             "status": self.status,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,

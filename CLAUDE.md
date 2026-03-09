@@ -40,7 +40,7 @@ chart/osa-suite/      Helm chart for Kubernetes deployment
 ## Running Locally
 
 ```bash
-./dev.sh              # Starts backend (:5000) + frontend (:5173)
+./dev.sh              # Starts backend (:5001) + frontend (:5173)
 ```
 
 Login: `admin` / `admin`

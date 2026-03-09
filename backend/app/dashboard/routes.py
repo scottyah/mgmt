@@ -48,8 +48,14 @@ def stats():
         Cert.not_valid_after < now_dt,
     ).count()
 
+    # Keycloak user counts (stubbed — will call Keycloak REST API later)
+    total_users = _get_total_users()
+    active_users = _get_active_users()
+
     return jsonify({
         "projects_count": projects_count,
+        "total_users": total_users,
+        "active_users": active_users,
         "licenses_count": licenses_count,
         "certs_count": certs_count,
         "expiring_licenses_30d": expiring_licenses_30d,
@@ -57,6 +63,21 @@ def stats():
         "expired_licenses": expired_licenses,
         "expired_certs": expired_certs,
     }), 200
+
+
+def _get_total_users():
+    """Stub: total users from Keycloak.
+    TODO: Replace with GET {keycloak}/admin/realms/{realm}/users/count
+    """
+    return 142
+
+
+def _get_active_users():
+    """Stub: active users from Keycloak.
+    TODO: Replace with Keycloak active sessions count via
+    GET {keycloak}/admin/realms/{realm}/client-session-stats
+    """
+    return 37
 
 
 @dashboard_bp.route("/expiring", methods=["GET"])

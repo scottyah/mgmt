@@ -24,17 +24,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { PROJECT_STATUSES, STATUS_LABELS } from "@/lib/constants";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { DataTable } from "@/components/shared/data-table";
 import { KeycloakStub } from "@/components/projects/keycloak-stub";
 import {
   useProject,
   useUpdateProject,
   useDeleteProject,
 } from "@/hooks/use-projects";
-import { useLicenses } from "@/hooks/use-licenses";
-import { useCerts } from "@/hooks/use-certs";
-import { getLicensesColumns } from "@/components/licenses/licenses-columns";
-import { getCertsColumns } from "@/components/certs/certs-columns";
 
 export default function ProjectDetailPage() {
   const { key } = useParams<{ key: string }>();
@@ -42,13 +37,6 @@ export default function ProjectDetailPage() {
   const { data, isLoading } = useProject(key);
   const updateProject = useUpdateProject(key ?? "");
   const deleteProject = useDeleteProject(key ?? "");
-  const { data: licenses, isLoading: licensesLoading } = useLicenses({
-    project_id: data?.project?.id,
-  });
-  const { data: certs, isLoading: certsLoading } = useCerts({
-    project_id: data?.project?.id,
-  });
-
   const [editField, setEditField] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
   const [showDelete, setShowDelete] = useState(false);
@@ -112,22 +100,15 @@ export default function ProjectDetailPage() {
     { key: "name", label: "Name", value: project.name },
     { key: "description", label: "Description", value: project.description },
     { key: "bfm", label: "BFM", value: project.bfm },
+    { key: "bfm_email", label: "BFM Email", value: project.bfm_email },
+    { key: "bfm_phone", label: "BFM Phone", value: project.bfm_phone },
     { key: "pm", label: "PM", value: project.pm },
+    { key: "pm_email", label: "PM Email", value: project.pm_email },
+    { key: "pm_phone", label: "PM Phone", value: project.pm_phone },
     { key: "admin", label: "Admin", value: project.admin },
+    { key: "admin_email", label: "Admin Email", value: project.admin_email },
+    { key: "admin_phone", label: "Admin Phone", value: project.admin_phone },
   ];
-
-  // Columns for sub-tables (simplified - no actions in project detail view)
-  const licenseColumns = getLicensesColumns({
-    onEdit: () => {},
-    onDelete: () => {},
-    onDownload: () => {},
-  });
-
-  const certColumns = getCertsColumns({
-    onEdit: () => {},
-    onDelete: () => {},
-    onExport: () => {},
-  });
 
   return (
     <div className="space-y-6">
@@ -165,12 +146,6 @@ export default function ProjectDetailPage() {
       <Tabs defaultValue="overview">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="licenses">
-            Licenses ({data.license_count})
-          </TabsTrigger>
-          <TabsTrigger value="certs">
-            Certificates ({data.cert_count})
-          </TabsTrigger>
           <TabsTrigger value="keycloak">Keycloak</TabsTrigger>
         </TabsList>
 
@@ -281,30 +256,6 @@ export default function ProjectDetailPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="licenses">
-          <DataTable
-            columns={licenseColumns}
-            data={licenses ?? []}
-            isLoading={licensesLoading}
-            searchKey="name"
-            searchPlaceholder="Search licenses..."
-            emptyTitle="No licenses"
-            emptyDescription="No licenses associated with this project yet."
-          />
-        </TabsContent>
-
-        <TabsContent value="certs">
-          <DataTable
-            columns={certColumns}
-            data={certs ?? []}
-            isLoading={certsLoading}
-            searchKey="name"
-            searchPlaceholder="Search certificates..."
-            emptyTitle="No certificates"
-            emptyDescription="No certificates associated with this project yet."
-          />
         </TabsContent>
 
         <TabsContent value="keycloak">

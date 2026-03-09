@@ -44,8 +44,14 @@ export function ProjectForm({
     name: "",
     description: "",
     bfm: "",
+    bfm_email: "",
+    bfm_phone: "",
     pm: "",
+    pm_email: "",
+    pm_phone: "",
     admin: "",
+    admin_email: "",
+    admin_phone: "",
     status: "active",
     ...initialData,
   });
@@ -135,35 +141,55 @@ export function ProjectForm({
               />
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="bfm">BFM</Label>
-                <Input
-                  id="bfm"
-                  placeholder="BFM name"
-                  value={formData.bfm ?? ""}
-                  onChange={(e) => updateField("bfm", e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="pm">PM</Label>
-                <Input
-                  id="pm"
-                  placeholder="PM name"
-                  value={formData.pm ?? ""}
-                  onChange={(e) => updateField("pm", e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="admin">Admin</Label>
-                <Input
-                  id="admin"
-                  placeholder="Admin name"
-                  value={formData.admin ?? ""}
-                  onChange={(e) => updateField("admin", e.target.value)}
-                />
-              </div>
-            </div>
+            {[
+              { role: "bfm", label: "BFM" },
+              { role: "pm", label: "PM" },
+              { role: "admin", label: "Admin" },
+            ].map(({ role, label }) => (
+              <fieldset key={role} className="rounded-lg border p-3">
+                <legend className="px-1 text-xs font-medium text-muted-foreground">
+                  {label}
+                </legend>
+                <div className="grid gap-2">
+                  <Input
+                    placeholder={`${label} name`}
+                    value={(formData[role as keyof Project] as string) ?? ""}
+                    onChange={(e) =>
+                      updateField(role as keyof Project, e.target.value)
+                    }
+                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      value={
+                        (formData[`${role}_email` as keyof Project] as string) ??
+                        ""
+                      }
+                      onChange={(e) =>
+                        updateField(
+                          `${role}_email` as keyof Project,
+                          e.target.value
+                        )
+                      }
+                    />
+                    <Input
+                      placeholder="Phone"
+                      value={
+                        (formData[`${role}_phone` as keyof Project] as string) ??
+                        ""
+                      }
+                      onChange={(e) =>
+                        updateField(
+                          `${role}_phone` as keyof Project,
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              </fieldset>
+            ))}
 
             <div className="grid gap-2">
               <Label>Status</Label>

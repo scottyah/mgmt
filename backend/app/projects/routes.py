@@ -72,8 +72,14 @@ def create_project():
         name=name,
         description=data.get("description"),
         bfm=data.get("bfm"),
+        bfm_email=data.get("bfm_email"),
+        bfm_phone=data.get("bfm_phone"),
         pm=data.get("pm"),
+        pm_email=data.get("pm_email"),
+        pm_phone=data.get("pm_phone"),
         admin=data.get("admin"),
+        admin_email=data.get("admin_email"),
+        admin_phone=data.get("admin_phone"),
         status=status,
     )
     db.session.add(project)
@@ -110,7 +116,7 @@ def update_project(key):
     if not data:
         return jsonify({"error": "Missing JSON body"}), 400
 
-    updatable = ("name", "description", "bfm", "pm", "admin", "status")
+    updatable = ("name", "description", "bfm", "bfm_email", "bfm_phone", "pm", "pm_email", "pm_phone", "admin", "admin_email", "admin_phone", "status")
     changes = {}
 
     for field in updatable:

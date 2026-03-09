@@ -16,6 +16,6 @@ RUN mkdir -p /data
 ENV DATABASE_URL=sqlite:////data/osa.db
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 5000
+EXPOSE 5001
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "run:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "2", "--timeout", "120", "run:app"]

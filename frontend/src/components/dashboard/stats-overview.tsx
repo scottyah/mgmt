@@ -1,10 +1,12 @@
-import { FolderKanban, KeyRound, ShieldCheck, AlertTriangle } from "lucide-react";
+import { FolderKanban, Users, KeyRound, ShieldCheck, AlertTriangle } from "lucide-react";
 import { StatCard } from "@/components/shared/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface StatsOverviewProps {
   stats?: {
     projects_count: number;
+    total_users: number;
+    active_users: number;
     licenses_count: number;
     certs_count: number;
     expiring_licenses_30d: number;
@@ -18,8 +20,8 @@ interface StatsOverviewProps {
 export function StatsOverview({ stats, isLoading }: StatsOverviewProps) {
   if (isLoading || !stats) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, i) => (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, i) => (
           <Skeleton key={i} className="h-24 rounded-xl" />
         ))}
       </div>
@@ -33,11 +35,18 @@ export function StatsOverview({ stats, isLoading }: StatsOverviewProps) {
     stats.expired_certs;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
       <StatCard
         icon={FolderKanban}
         title="Projects"
         value={stats.projects_count}
+        variant="default"
+      />
+      <StatCard
+        icon={Users}
+        title="Users"
+        value={stats.total_users}
+        subtitle={`${stats.active_users} active now`}
         variant="default"
       />
       <StatCard
